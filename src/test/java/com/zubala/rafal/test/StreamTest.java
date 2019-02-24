@@ -55,4 +55,18 @@ public class StreamTest {
 	    
 	    assertEquals(employees.size(), empIds.length);
 	}	
+	
+	@Test
+	public void whenFindFirst_thenGetFirstEmployeeInStream() {
+	    Integer[] empIds = { 1, 2, 3, 4 };
+
+	    Employee employee = Stream.of(empIds)
+	      .map(employeeRepository::findById)
+	      .filter(e -> e != null)
+	      .filter(e -> e.getSalary() > 110000)
+	      .findFirst()
+	      .orElse(null);
+	    
+	    assertEquals(employee.getSalary(), Double.valueOf(220000));
+	}	
 }
