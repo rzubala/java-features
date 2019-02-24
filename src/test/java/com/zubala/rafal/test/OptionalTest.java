@@ -22,7 +22,7 @@ import com.zubala.rafal.model.User;
 
 public class OptionalTest {
 
-	public static final Logger logger = Logger.getLogger("com.zubala.rafal");
+	public static final Logger logger = Logger.getLogger("com.zubala.rafal.test.OptionalTest");
 
 	@BeforeAll
 	public static void init() throws Exception {
