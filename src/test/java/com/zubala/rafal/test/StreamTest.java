@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -68,5 +69,26 @@ public class StreamTest {
 	      .orElse(null);
 	    
 	    assertEquals(employee.getSalary(), Double.valueOf(220000));
+	}	
+	
+	@Test
+	public void whenStreamToArray_thenGetArray() {
+	    Employee[] employees = empList.stream().toArray(Employee[]::new);
+
+	    assertThat(empList.toArray(), equalTo(employees));
+	}	
+	
+	@Test
+	public void whenFlatMapEmployeeNames_thenGetNameStream() {
+	    List<List<String>> namesNested = Arrays.asList( 
+	      Arrays.asList("Jeff", "Bezos"), 
+	      Arrays.asList("Bill", "Gates"), 
+	      Arrays.asList("Mark", "Zuckerberg"));
+
+	    List<String> namesFlatStream = namesNested.stream()
+	      .flatMap(Collection::stream)
+	      .collect(Collectors.toList());
+
+	    assertEquals(namesFlatStream.size(), namesNested.size() * 2);
 	}	
 }
