@@ -5,37 +5,54 @@ import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Stream8 {
 
     public static List<Integer> returnSquareRoot(List<Integer> numbers){
-        throw new RuntimeException();
+    	return numbers.stream()
+			.map(java.lang.Math::sqrt)
+			.map(Double::intValue)
+			.collect(Collectors.toList());
     }
 
     public static List<Integer> getAgeFromUsers(List<User> user){
-        throw new RuntimeException();
+    	return user.stream()
+    		.map(User::getAge)
+    		.collect(Collectors.toList());
     }
 
     public static List<Integer> getDistinctAges(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+			.map(User::getAge)
+			.distinct()
+			.collect(Collectors.toList());
     }
 
     public static List<User> getLimitedUserList(List<User> users, int limit){
-        throw new RuntimeException();
+    	return users.stream()
+			.limit(2)
+			.collect(Collectors.toList());
     }
 
     public static Integer countUsersOlderThen25(List<User> users){
-        throw new RuntimeException();
+    	return (int) users.stream()
+    			.filter(us -> us.getAge() > 25)
+    			.count();
     }
 
     public static List<String> mapToUpperCase(List<String> strings){
-        throw new RuntimeException();
+    	return strings.stream()
+    		.map(String::toUpperCase)
+    		.collect(Collectors.toList());
     }
 
     public static Integer sum(List<Integer> integers){
-        throw new RuntimeException();
+    	return integers.stream()
+			//.reduce(0, Integer::sum);
+			.reduce(0, (x,y) -> x+y);
     }
 
     public static List<Integer> skip(List<Integer> integers, Integer toSkip){
