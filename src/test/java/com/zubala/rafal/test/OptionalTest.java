@@ -1,8 +1,7 @@
 package com.zubala.rafal.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,8 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.zubala.rafal.model.Address;
 import com.zubala.rafal.model.Country;
@@ -24,8 +23,8 @@ public class OptionalTest {
 
 	public static final Logger logger = Logger.getLogger("com.zubala.rafal.test.OptionalTest");
 
-	@BeforeAll
-	public static void init() throws Exception {
+	@Before
+	public void init() throws Exception {
 		BasicConfigurator.configure();
 	}
 
@@ -88,12 +87,10 @@ public class OptionalTest {
 		return new User("extra@gmail.com", "1234");
 	}
 
-	@Test
+    @Test(expected = IllegalArgumentException.class)
 	public void whenThrowException_thenOk() {
 		User user = null;
-		assertThrows(IllegalArgumentException.class, () -> {
-			User result = Optional.ofNullable(user).orElseThrow(() -> new IllegalArgumentException());
-		});
+		User result = Optional.ofNullable(user).orElseThrow(() -> new IllegalArgumentException());
 	}
 
 	@Test

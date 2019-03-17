@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,8 +26,8 @@ import java.util.stream.Stream;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.zubala.rafal.model.Employee;
 import com.zubala.rafal.repository.EmployeeRepository;
@@ -44,8 +44,8 @@ public class StreamTest {
 	
 	private static final String fileName = "/tmp/file.tmp";
 
-	@BeforeAll
-	public static void init() throws Exception {
+	@Before
+	public void init() throws Exception {
 		BasicConfigurator.configure();
 	}
 
@@ -165,7 +165,7 @@ public class StreamTest {
 	      .min((e1, e2) -> e1.getId() - e2.getId())
 	      .orElseThrow(NoSuchElementException::new);
 
-	    assertEquals(firstEmp.getId(), new Integer(1));
+	    assertEquals(firstEmp.getId(), new Integer(1).intValue());
 	}
 	
 	@Test
