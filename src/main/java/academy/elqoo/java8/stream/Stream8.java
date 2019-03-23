@@ -1,6 +1,8 @@
 package academy.elqoo.java8.stream;
 
 
+import java.util.Arrays;
+import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
@@ -56,44 +58,72 @@ public class Stream8 {
     }
 
     public static List<Integer> skip(List<Integer> integers, Integer toSkip){
-        throw new RuntimeException();
+    	return integers.stream()
+			.skip(toSkip)
+			.collect(Collectors.toList());
     }
 
     public static List<String> getFirstNames(List<String> names){
-        throw new RuntimeException();
+    	return names.stream()
+			.map(n -> {
+				String[] tmp = n.split(" ", 2);
+				return tmp[0];
+			})
+			.collect(Collectors.toList());
     }
 
     public static List<String> getDistinctLetters(List<String> names){
-        throw new RuntimeException();
+    	return names.stream()
+    			.map(n -> n.split(""))
+    			.flatMap(Arrays::stream)	//!!!!!!!!!
+    			.distinct()
+    			.collect(Collectors.toList());
     }
 
 
     public static String separateNamesByComma(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.map(User::getName)
+    			.reduce("", (acc, next) -> acc.isEmpty() ? next : acc + ", " + next);
     }
 
     public static double getAverageAge(List<User> users){
-        throw new RuntimeException();
+//    	return users.stream()
+//    			.mapToInt(User::getAge)
+//    			.average()
+//    			.getAsDouble();
+    	return users.stream()
+    			.collect(Collectors.summarizingInt(User::getAge))
+    			.getAverage();
     }
 
     public static Integer getMaxAge(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.mapToInt(User::getAge)
+    			.max()
+    			.getAsInt();
     }
 
     public static Integer getMinAge(List<User> users) {
-        throw new RuntimeException();
+    	return users.stream()
+    			.mapToInt(User::getAge)
+    			.min()
+    			.getAsInt();
     }
 
     public static Map<Boolean, List<User>> partionUsersByGender(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.collect(Collectors.partitioningBy(User::isMale));	//!!!!!!! PARTITION BY
     }
 
     public static Map<Integer, List<User>> groupByAge(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.collect(Collectors.groupingBy(User::getAge));		//!!!!!!! GROUPING BY
     }
 
     public static Map<Boolean, Map<Integer, List<User>>> groupByGenderAndAge(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    		    .collect(Collectors.groupingBy(User::isMale, Collectors.groupingBy(User::getAge)));
     }
 
     public static Map<Boolean, Long> countGender(List<User> users){
