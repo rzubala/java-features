@@ -2,11 +2,13 @@ package academy.elqoo.java8.stream;
 
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -127,23 +129,30 @@ public class Stream8 {
     }
 
     public static Map<Boolean, Long> countGender(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.collect(Collectors.groupingBy(User::isMale, Collectors.counting()));	//!!!!!!! GROUPING AND COUNT
     }
 
     public static boolean anyMatch(List<User> users, int age){
-        throw new RuntimeException();
+    	return users.stream()
+    			.anyMatch(user -> user.getAge() == age);
     }
 
     public static boolean noneMatch(List<User> users, int age){
-        throw new RuntimeException();
+    	return users.stream()
+    			.noneMatch(user -> user.getAge() == age);
     }
 
     public static Optional<User> findAny(List<User> users, String name){
-        throw new RuntimeException();
+    	return users.stream()
+    			.filter(user -> user.getName().equals(name))
+    			.findAny();
     }
 
     public static List<User> sortByAge(List<User> users){
-        throw new RuntimeException();
+        return users.stream()
+        		.sorted(Comparator.comparing(User::getAge))
+        		.collect(Collectors.toList());
     }
 
     public static Stream<Integer> getBoxedStream(IntStream stream){
