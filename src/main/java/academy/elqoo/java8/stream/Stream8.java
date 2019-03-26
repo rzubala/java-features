@@ -2,13 +2,13 @@ package academy.elqoo.java8.stream;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -156,11 +156,14 @@ public class Stream8 {
     }
 
     public static Stream<Integer> getBoxedStream(IntStream stream){
-        throw new RuntimeException();
+    	return stream.boxed();
     }
 
     public static List<Integer> generateFirst10PrimeNumbers(){
-        throw new RuntimeException();
+    	return Stream.iterate(2, i -> i+1)
+    		.filter(i -> isPrime(i))
+    		.limit(10)
+    		.collect(Collectors.toList());    		
     }
 
     public static boolean isPrime(int number) {
@@ -168,19 +171,27 @@ public class Stream8 {
     }
 
     public static List<Integer> generate10RandomNumbers(){
-        throw new RuntimeException();
+    	return new Random().ints(10)
+    		.boxed()
+    		.collect(Collectors.toList()); 
     }
 
     public static User findOldest(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.sorted(Comparator.comparing(User::getAge).reversed())
+    			.findFirst()
+    			.get();
     }
 
     public static int sumAge(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.mapToInt(User::getAge)
+    			.reduce(0, Integer::sum);
     }
 
     public static IntSummaryStatistics ageSummaryStatistics(List<User> users){
-        throw new RuntimeException();
+    	return users.stream()
+    			.collect(Collectors.summarizingInt(User::getAge));
     }
 
 }
