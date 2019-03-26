@@ -6,4 +6,9 @@ public class Triangle extends AbstractShape{
     public String getName() {
         return "Triangle";
     }
+    
+    @Override
+    public void notImplementedMethod() {
+    	throw new RuntimeException();
+    }
 }
